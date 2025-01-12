@@ -10,7 +10,7 @@ $$
 
 Word2Vec is a technique used to represent words as continuous vectors, which can capture the semantic relationships between words.
 
-<img src="assets/R3hsF.png" alt="machine learning - What is the point of having a dense layer in a ..." style="zoom: 50%;" />
+<img src="assets/R3hsF.png" alt="machine learning - What is the point of having a dense layer in a ..." style="zoom: 80%;" />
 
 ### CBOW（Continuous Bag of Words）
 

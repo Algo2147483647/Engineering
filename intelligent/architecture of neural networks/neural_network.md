@@ -34,6 +34,8 @@ An activation function introduces non-linearity into the network, enabling it to
 - **Tanh**: $\sigma(z) = \frac{e^z - e^{-z}}{e^z + e^{-z}} \), output range between -1 and 1.
 - **Softmax**: Converts logits into a probability distribution over multiple classes (used in multi-class classification problems).
 
+## Train
+
 ### Back Propagation: Gradient Descent Optimization
 
 $$
@@ -47,14 +49,31 @@ $$
 $$
 \boldsymbol w^{τ+1} \leftarrow \boldsymbol w^τ - η ∇ E(\boldsymbol w^τ)
 $$
-Backpropagation Neural Network is a neural network trained by backpropagation algorithm. Backpropagation is the algorithm used to train the neural network by updating the weights and biases. It computes the gradient of the loss function with respect to each weight using the chain rule of calculus. The weights are updated using an optimization algorithm like **Stochastic Gradient Descent (SGD)** or more advanced ones like **Adam**.
+Backpropagation Neural Network is a neural network trained by backpropagation algorithm. Backpropagation is the algorithm used to train the neural network by updating the weights and biases. It computes the gradient of the loss function with respect to each weight using the chain rule of calculus. The weights are updated using an optimization algorithm like **Stochastic Gradient Descent (SGD)** or more advanced ones like **Adaptive Moment Estimation (Adam)**.
 - $z = \boldsymbol w^T \boldsymbol x + \boldsymbol b$
 - $E_{total} = \sum (target_i - out_i)^2$ 误差·损失函数
 - $E(\boldsymbol w)=\frac{1}{2} \sum_{n=1}^N ||\boldsymbol y(\boldsymbol x_n, \boldsymbol w)-\boldsymbol t_n||^2$
 
+###  Optimization algorithm
+
+#### Adaptive Moment Estimation
+
 ### Loss Function
 
 The loss function is used to measure the error between the predicted output of the network and the true output (label). Common loss functions include Mean Squared Error (MSE), Cross-Entropy Loss. The objective during training is to minimize this loss function.
+
+#### Cross Entropy Loss
+
+$$
+\text{Loss} = - \sum_{i=1}^{C} y_i \log(p_i)
+$$
+
+Cross-entropy loss 's behavior is more sensitive to incorrect predictions when the model is confident. In multi-class classification, the cross-entropy loss compares the predicted probabilities with the true label's one-hot encoded vector.
+
+- $C$ is the number of classes,
+- $y_i$ is the true probability distribution (one-hot encoded, where the true class label is 1, and others are 0),
+- $p_i$ is the predicted probability for class $i$,
+- The sum is taken over all classes $C$.
 
 ## Appendix
 

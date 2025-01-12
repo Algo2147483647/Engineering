@@ -84,14 +84,3 @@ $$
 \end{align*}
 $$
 
-## Compute Convolution
-
-* Img2Col convolutional algorithm  
-  $$
-  \boldsymbol Y = \boldsymbol g * \boldsymbol d = \text{Img2Col}(g) \times \text{Img2Col}(d)
-  $$
-
-* Winograd convolutional algorithm
-  $$
-  \boldsymbol Y = \boldsymbol g * \boldsymbol d = \boldsymbol A^T ((\boldsymbol G \boldsymbol g \boldsymbol G^T) \odot (\boldsymbol B^T \boldsymbol d \boldsymbol B)) \boldsymbol A
-  $$

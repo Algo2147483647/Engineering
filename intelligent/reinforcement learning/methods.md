@@ -30,7 +30,7 @@ The Actor-Critic algorithm is a foundational approach that combines the policy-b
 
 2. **Critic**: The critic evaluates the actions taken by the actor by computing the value function $V(s)$ or the action-value function $Q(s, a)$. The critic assesses the quality of the actions given the state of the environment.
 
-<img src="assets/R.png" alt="R" style="zoom: 52%;" />
+<img src="assets/R.png" alt="R" style="zoom: 80%;" />
 
 - **Policy (Actor) Improvement**: The actor adjusts its policy parameters $\theta$ based on the gradient of expected rewards. It tries to maximize the expected return by considering the feedback from the critic.
 
