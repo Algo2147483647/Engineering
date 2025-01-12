@@ -47,20 +47,19 @@
    - 终局时，经双方确认，能被提取的棋都是死棋。
 1. 计算胜负。着子完毕的棋局，采用数子法计算胜负。将双方死子清理出盘外后，对任意一方的活棋和活棋围住的点以子为单位进行计数。双方活棋之间的空点各得一半。棋盘总点数的一半180.5点为归本数。一方总得点数超过此数为胜，等于此数为和，小于此数为负。
 
-### Mathematical Description
 
-#### Board & Color
+### Board & Player & Color
 
 $$
 \begin{align*}
-\boldsymbol B &\in \{0, 1, -1\}^{n \times n} \quad, n = 19  \tag{Board}\\
-c &\in \{1, -1\} \tag{Color}
+\boldsymbol B &\in \{0, 1, -1\}^{n \times n} \quad n = 19  \tag{Board}\\
+b &\in \{1, 0, -1\} \tag{Color}
 \end{align*}
 $$
 
-- Board is ```a 19x19 square grid of points,```
-- Player: ```by two players called Black and White.```
-- Color: ```Each point on the grid may be colored black, white or empty.```
+- Board: a 19x19 square grid of points 
+- Player: by two players called Black and White. 
+- Color: Each point on the grid may be colored black, white or empty. 
 
 
 | Color | Number |
@@ -69,18 +68,8 @@ $$
 | Black |   1    |
 | White |   -1   |
 
-#### Reach
-> A point P, not colored C, is said to reach C, if there is a path of (vertically or horizontally) adjacent points of P’s color from P to a point of color C.
 
-$$
-\text{adj}(x, y) = \{(x+1, y), (x, y+1), (x-1, y), (x, y-1)\}  \tag{Adjacent}
-$$
-
-- **Stone Block**: Stone Block is consisted of adjecent stones of the same color.
-  
-- **Qi**: Qi is a number of empty points that a stone block can reach.
-
-#### $\mathcal S$ : State
+### State
 $$
 \begin{align*}
 S &= (\boldsymbol B) \tag{State Set}\\
@@ -97,57 +86,6 @@ $$
 a_{\text{end-1}} = a_{\text{end}} = \text{PASS}
 $$
 
-#### $\mathcal A$: Action
-
-> A turn is either a pass; or a move
-
-$$
-\begin{align*}
-\mathcal A &= \{(\text{PASS}, c)\} \cup \{(x, y, c) \ |\ x \in 1:n,\ y \in 1:n,\ c \in \{1, -1\},\ B(x, y) = 0\}  \tag{Action Set}\\
-A_{0,c} &= 1  \tag{黑先白后}\\
-A_{k,c} &= -A_{k-1,c}  \tag{交替落子}
-\end{align*}
-$$
-
-- $A_0$ Initial Action
-> starting with Black.
-> the players alternate turns.
-> 禁止全局同形, that doesn’t repeat an earlier grid coloring.
-
-$$
-\boldsymbol B_k \neq \boldsymbol B_{k-i}  \quad,  \forall 0 < i \le k  \tag{禁全同}
-$$
-
-#### $S_{k-1} \overset{A_{k-1}}{\rightarrow} S_{k}$: Status update
-
-$$
-\begin{align*}
-\boldsymbol B(a_{k,x}, a_{k,y}) &\gets a_{k,c}  \tag{空地落子}\\
-\boldsymbol B((u_x, u_y) \ |\ Q(U) = 0, U_c \neq a_{k,c}) &\gets 0  \tag{无气提子}
-\end{align*}
-$$
-
-> A move consists of coloring an empty point one’s own color;
-> then clearing the opponent color, and then clearing one’s own color.```, ```Clearing a color is the process of emptying all points of that color that don’t reach empty.
-
-
-#### $R(S_{\text{end}})$: Reward, Victory or Defeat
-
-> A player’s score is the number of points of her color, plus the number of empty points that reach only her color.
-- In order balance the first-hand advantage, the black gives white 7.5 points. 
-> The player with the larger score at the end of the game is the winner.
-
-$$
-\begin{align*}
-R_{\text{Black}}(S) &= -R_{\text{White}}(S)  \tag{Zero-Sum Game}\\
-R_{\text{Black}}(S) &= - \frac{7.5}{2} + \sum_{\begin{matrix}\tiny{(x, y) \in (1:n, 1:n)} \\ \tiny{\boldsymbol B(x, y) = 0}\end{matrix}}(x, y, S)  \tag{数子}\\
-I_{\text{Black}}(x, y, S) &= \left\{\begin{matrix} c & c \in \text{reach}(x, y), -c \notin \text{reach}(x, y) \\ \frac{1}{2} & other.\end{matrix}\right.\\
-\end{align*}
-$$
-
-## Implementation of Go
-
-### State
 - **Player**: Indicates the current player's color, witch can be: (1) Black. (2) White.
 - **Board**: Represents the game bord, modeled as an $n \times n$ matrix. Each element in the matrix can be one of the following:  (1) Black. (2) White. (3) Empty.
 - **Action**: Refers to the available moves a player can take, which include:
@@ -162,26 +100,48 @@ $$
 
 <img src="./assets/image-20240921011727556.png" alt="image-20240921011727556" style="zoom: 40%;" />
 
-#### Termination
+#### Reach
+> A point P, not colored C, is said to reach C, if there is a path of (vertically or horizontally) adjacent points of P’s color from P to a point of color C.
+
+$$
+\text{adj}(x, y) = \{(x+1, y), (x, y+1), (x-1, y), (x, y-1)\}  \tag{adjacent}
+$$
+
+- **Stone Block**: Stone Block is consisted of adjecent stones of the same color.
+  
+- **Qi**: Qi is a number of empty points that a stone block can reach.
+
+
+#### Terminate States
 
 twice `PASS` to termination the game.
 
 #### Zobrist Hash
 
-Zobrist hashing is to efficiently compute unique hash values representing different board states.
-
-- Zobrist Table, is a 2D array that holds precomputed random 64-bit numbers. Each entry in this table corresponds to a unique combination of a board position and a possible state.
-
-- Compute the Zobrist Hash, compute the current hash value based on a change at a specific board position and color (state).
-
-  - **Adding a Piece**: XOR the hash with the random number corresponding to the `(position, state)` pair.
-  - **Removing a Piece**: XOR the hash again with the same random number, effectively removing its influence from the hash.
-
 $$
-v = v ⊕ table_{Zobrist}(position, color);
+v = v \odot \text{table}_\text{Zobrist}(\text{position}, \text{color});
 $$
+
+Zobrist hashing is to efficiently compute unique hash values representing different board states. Zobrist Table, is a 2D array that holds precomputed random 64-bit numbers. Each entry in this table corresponds to a unique combination of a board position and a possible state. Compute the Zobrist Hash, compute the current hash value based on a change at a specific board position and color (state).
+- **Adding a Piece**: XOR the hash with the random number corresponding to the `(position, state)` pair.
+- **Removing a Piece**: XOR the hash again with the same random number, effectively removing its influence from the hash.
+
 
 ### Action
+
+$$
+\begin{align*}
+\mathcal A &= \{(\text{PASS}, c)\} \cup \{(x, y, c) \ |\ x \in 1:n,\ y \in 1:n,\ c \in \{1, -1\},\ B(x, y) = 0\}  \tag{Action Set}\\
+A_{0,c} &= 1  \tag{黑先白后}\\
+A_{k,c} &= -A_{k-1,c}  \tag{交替落子}
+\end{align*}
+$$
+
+- $A_0$ Initial Action
+
+
+
+
 
 #### Pass
 
@@ -189,11 +149,24 @@ $$
 
 #### Disable global isomorphism
 
+$$
+\boldsymbol B_t \neq \boldsymbol B_{\tau}  \quad \forall 0 \le \tau \le t  \tag{disable global isomorphism}
+$$
+
 检查当前传入的状态 state 的棋盘的zobrist hash 值，是否在历史上同一棋手处存在过。
 
 #### Not allow suicide
 
-### $S_t \overset{A_t}{\rightarrow} S_{t+1}$
+
+### State Transfer
+
+$$
+\begin{align*}
+\boldsymbol B(a_{k,x}, a_{k,y}) &\gets a_{k,c}  \tag{空地落子}\\
+\boldsymbol B((u_x, u_y) \ |\ Q(U) = 0, U_c \neq a_{k,c}) &\gets 0  \tag{无气提子}
+\end{align*}
+$$
+
 
 #### Remove stone block with no Qi
 
@@ -204,6 +177,18 @@ $$
 输入两个连通块的序号，也是头位置，遍历块1的颜色都改为块2序号，并看周围空点是否为块1、2的共用空点，如果不是，块2的气加一. 最后交换两个头的后继，合并为1个连通块。
 
 ### Reward
+
+> A player’s score is the number of points of her color, plus the number of empty points that reach only her color.
+> The player with the larger score at the end of the game is the winner.
+
+$$
+\begin{align*}
+R_{\text{Black}}(S) &= -R_{\text{White}}(S)  \tag{Zero-Sum Game}\\
+R_{\text{Black}}(S) &= - \frac{7.5}{2} + \sum_{\begin{matrix}\tiny{(x, y) \in (1:n, 1:n)} \\ \tiny{\boldsymbol B(x, y) = 0}\end{matrix}}(x, y, S)  \tag{数子}\\
+I_{\text{Black}}(x, y, S) &= \left\{\begin{matrix} c & c \in \text{reach}(x, y), -c \notin \text{reach}(x, y) \\ \frac{1}{2} & other.\end{matrix}\right.\\
+\end{align*}
+$$
+
 
 #### Score: Number of spaces reachable
 
@@ -220,11 +205,62 @@ $$
 
 #### Win or loss calculation (Komi)
 
-float komi = 7.5;
+**Komi** is a rule that provides an additional score to the player playing with the white stones to compensate for the advantage that the player with black stones has by playing the first move.
 
-auto white = calculateReachColor(s.board, WHITE);
-auto black = calculateReachColor(s.board, BLACK);
-return (black - white - komi) >= 0 ? BLACK : WHITE;
+## Solution: Alpha-Go
 
-## Solution: Alpha Go
+### Architecture
 
+### Policy-Value Network
+
+The **Policy Network** predicts the probability distribution of actions to take at each state of the game. The output of policy network is a vector where each element represents the probability of taking a particular action.
+
+The **Value Network** evaluates the board position by predicting the likelihood of winning from that position. The value network outputs a scalar value $\in [-1, 1]$, which represents the probability of winning from that state.
+
+The policy network and value network are combined into a single deep convolutional neural network (CNN) called **Policy-Value Network**. 
+
+- Input layer: The input is a 19x19 matrix with 17 channels, including the current state of the board, which player's turn it is (black or white),
+
+- Policy Head: One branch of the network processes the features from the shared layers to produce the policy (the action probabilities).
+- Value Head: Another branch processes the same features to produce the value (the game outcome evaluation).
+
+### MCTS
+
+**Selection**: During the tree search process, MCTS starts from the root node and selects a path until it reaches a node that has not been fully expanded or a leaf node. During the selection process, MCTS uses UCT (Upper Confidence Bound for Trees) to balance exploration and exploitation. 通过引入网络提供的策略概率来帮助计算节点选择的优先级, MCTS 在选择动作时偏向于那些网络预测为高概率的动作，从而加速了搜索过程。
+$$
+UCT = Q(s, a) + \frac{P(s, a) \sqrt{N(s)}}{1 + N(s)}
+$$
+
+- $Q(s, a)$: the average of state $s$ and action $a$ (obtained through simulation).
+- $P(s, a)$: the policy probability given by the Policy Network (the probability distribution of the network output).
+- $N(s)$: the number of visits to the current state $s$.
+
+**Expansion**: When searching for a node that has not been fully expanded, MCTS generates a probability distribution of all legal actions for the node through the Policy Network and expands the tree based on these probabilities. Each expanded node represents a new state and initializes the number of visits and value of the state.
+
+**Simulation**: After expansion, MCTS will perform a quick simulation (Rollout), starting from the newly expanded node, each step uses the strategy and evaluation value provided by the Policy-Value Network to select actions to simulate the entire game process until the game ends. The purpose of this stage is to quickly estimate the final result of the state through simulation. Value Network 负责为每个状态提供一个值估计（即这个局面的胜率）, 模拟（rollout）利用了 Value Network 来提供对当前局面的精确评估，而不是依赖在传统的 MCTS 中随机决策模拟来进行推演。这样，MCTS 在每次模拟结束时不仅仅依据游戏的最终结果来评估，还结合了网络对局面质量的估值，从而优化了搜索策略。
+
+**Backpropagation**: Once the simulation is finished, MCTS will update the statistics of all nodes along the path based on the simulation results. The Q-value (i.e., the value of the node) of each node will be updated to the simulation result, and N(s) will increase by 1, indicating that the node has been visited once. This update process will continue until the root node. During the backtracking process, the evaluation value of the leaf node is updated using the Value Network to avoid relying entirely on the simulation results, and instead combine the accurate evaluation of the neural network to improve the search effect.
+
+### Train
+
+In AlphaGo Zero, the optimizer used is Adam Optimizer.
+
+#### Loss function
+
+$$
+\begin{align*}
+Loss_\text{total} &= Loss_\text{policy} + c \times Loss_\text{value}  \\
+&= - \sum_{i} \pi_{\text{target}}(s) \log \pi_{\theta}(s) + c \times\left( V_{\text{target}}(s) - V_{\theta}(s) \right)^2
+\end{align*}
+$$
+
+**Policy Loss** minimizes the difference between the network's output strategy $\pi_{\theta}(s)$ and the true strategy $\pi_{\text{target}}(s)$. It uses the **cross-entropy loss function**, which optimizes by calculating the difference between the strategy predicted by the network and the strategy obtained through MCTS. This loss function helps the network learn a strategy that aligns with the results of the MCTS search, guiding the model to choose more likely actions during the tree search.
+
+**Value Loss** minimizes the difference between the network's predicted value $V_{\theta}(s)$ and the true value $V_{\text{target}}(s)$. It uses **mean squared error (MSE)** to measure the accuracy of the network's evaluation of the state. This loss function ensures that the network's output closely matches the true state evaluation, thus improving the model's ability to predict the value of a given state.
+
+- $\pi_{\theta}(s)$: the predicted strategy of the network
+- $\pi_{\text{target}}(s)$: the actual strategy calculated by MCTS
+- $i$: each possible position on the board
+- $V_{\theta}(s)$: the predicted value of the network
+- $V_{\text{target}}(s)$: the actual value obtained by MCTS simulation (i.e. the winning rate of the current situation)
+- $c$: a hyperparameter used to adjust the relative importance of policy loss and value loss, balancing the two and avoid one part having too much influence on the training process.
