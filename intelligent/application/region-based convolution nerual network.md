@@ -1,4 +1,4 @@
-# RCNN
+# Region-based convolution nerual network (RCNN)
 
 <img src="assets/v2-32e78b7f2e29c3e4e159a52ed38a6f73_720w.webp" alt="img" style="zoom: 60%;" />
 
