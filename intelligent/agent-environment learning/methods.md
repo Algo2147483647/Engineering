@@ -2,6 +2,29 @@
 
 ## Value-Based Methods
 
+### Estimate the Value function
+
+- Dynamic Programming: 迭代寻找不动点
+$$
+V_{k+1} (s) = \sum_a \mathbb P_\pi(a | s) \sum_{s',r} \mathbb P(s', r | s, a) (r + \gamma V_k (s'))
+$$
+$V_\pi$即是迭代寻找的不动点
+
+- Monte Carlo Method: 随机采样估计  
+当环境转移概率$\mathbb P(s', r | s, a)$不知道时, 通过随机采样$G_t$以估计$V_\pi(s)$.
+$$
+V_\pi(s) \gets V_\pi(s) + \alpha (G_t - V_\pi(s))
+$$
+
+- Temporal Difference Learning
+$$
+\begin{align*}
+V_\pi(s)  &\gets V_\pi(s) + \alpha (r + \gamma V_\pi(s') - V_\pi(s))  \\
+Q(s, a) &\gets Q(s, a) + \alpha (r + \gamma Q(s', a') - Q(s, a))  \tag{on policy}\\
+Q(s, a) &\gets Q(s, a) + \alpha \left(r + \gamma · \max_{a_i' \in A} Q(s', a_i') - Q(s, a)\right)  \tag{off policy}
+\end{align*}
+$$
+
 ### Q-Learning & SARSA
 
 $$
@@ -17,6 +40,28 @@ State-Action-Reward-State-Action (SARSA) is an on-policy learner.
 ### Deep Q-Networks
 
 ## Policy-Based Methods
+
+
+#### Q: finding the optimal policy
+
+策略梯度上升方法
+- 原理: 通过策略梯度上升更新随机性策略的参数$\theta$. $J(\theta)$是对策略的性能度量函数, 可定义为$J(\theta) = V_{\pi_\theta} (s_{t=0})$.
+
+$$
+\begin{align*}
+\mathbb P_\pi (a | s, \theta)  \\
+\theta_{t+1} = \theta_{t+1} + \alpha \widehat{\nabla J(\theta_t)}
+\end{align*}
+$$
+
+- Strategy gradient theorem  
+$$
+\begin{align*}
+\nabla J(\boldsymbol \theta) &= \nabla_\theta V(s)  \\
+&\propto \sum_{s' \in S} \mathbb P_{μ,\pi}(s') \sum_{a \in A} Q_\pi(s', a) \nabla_\theta \mathbb P_\pi(a | s', \boldsymbol \theta)   \\
+&\propto \mathbb E_{s' \sim \mathbb P_{μ,\pi}, a \sim \pi}(Q_\pi(s', a) \nabla_\theta \ln \mathbb P_\pi (a | s'))
+\end{align*}
+$$
 
 ### Policy Gradient
 
