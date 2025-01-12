@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" height="100%" viewBox="-100 -425 1200 600">
+ <title>comparison of four legged interchanges</title>
+ <desc>Right-hand (upper row) and left-hand (lower row) traffic flows colour-coded by destination for cloverleaf (1), stack (2), turbine and windmill (3), Pinavia (4), ITL (5) and braided (6) complete interchanges, with weaving circled and straight-ahead lanes in bold, as drawn by CMG Lee based on the diagram at http://newcivilengineer.com/innovative-thinking/future-of-roads-space-saving-motorway-interchange-inside-turning-left-09-03-2020 .</desc>
+ <style type="text/css">
+.main { font-size:30px; font-family:Helvetica,Arial,sans-serif; text-anchor:middle;
+        fill:none; stroke-width:2; }
+.a    { stroke-width:4; }
+.i_n  { stroke-dasharray:28,3,9,3; }
+.i_e  { stroke-dasharray: 9,3; }
+.i_w  { stroke-dasharray:28,3; }
+.i_s  { stroke-dasharray:99,1; }
+.o_n  { stroke:#ccaa00; }
+.o_e  { stroke:#00cc99; }
+.o_w  { stroke:#ff0000; }
+.o_s  { stroke:#0066ff; }
+@keyframes         animate {   0% { stroke-dashoffset:9999; }
+                             100% { stroke-dashoffset:   0; } }
+@-moz-keyframes    animate {   0% { stroke-dashoffset:9999; }
+                             100% { stroke-dashoffset:   0; } }
+@-webkit-keyframes animate {   0% { stroke-dashoffset:9999; }
+                             100% { stroke-dashoffset:   0; } }
+.animate { animation:         animate 999s linear infinite;
+           -moz-animation:    animate 999s linear infinite;
+           -webkit-animation: animate 999s linear infinite; }
+ </style>
+ <defs>
+  <circle id="cloverleaf_weave" cx="25" cy="0" r="5" fill="#000000"/>
+  <path id="cloverleaf_l" d="M 20,90 V 5 L 30,-5 V -35 C 30,-80 80,-30 35,-30 H 5 L -5,-20 H -90 m 4,-2 l -4,2 l 4,2"/>
+  <path id="cloverleaf_a" d="M 10,90 V -90 m -2,4 l 2,-4 l 2,4"/>
+  <path id="cloverleaf_r" d="M 30,90 V 88 C 30,77 77,30 88,30 H 90 m -4,-2 l 4,2 l -4,2"/>
+  <path id="stack_l" d="M 20,90 V 80 C 20,40 -40,-20 -90,-20 H -90 m 4,-2 l -4,2 l 4,2"/>
+  <path id="stack_a" d="M 10,90 V -90 m -2,4 l 2,-4 l 2,4"/>
+  <path id="stack_r" d="M 30,90 Q 30,30 90,30 m -4,-2 l 4,2 l -4,2"/>
+  <path id="turbine_l" d="M 20,90 C 20,30 50,40 50,10 C 50,-50 0,-20 -30,-20 H -90 m 4,-2 l -4,2 l 4,2"/>
+  <path id="turbine_a" d="M 10,90 V -90 m -2,4 l 2,-4 l 2,4"/>
+  <path id="turbine_r" d="M 30,90 Q 30,30 90,30 m -4,-2 l 4,2 l -4,2"/>
+  <path id="pinavia_l" d="M 10,90 C 10,20 30,20 30,-10 Q 28,-50 -10,-50 C -40,-50 -45,-20 -90,-20 m 4,-2 l -4,2 l 4,2"/>
+  <path id="pinavia_a" d="M 20,90 C 20,20 40,20 40,-10 C 40,-45 10,-40 10,-90 m -2,4 l 2,-4 l 2,4"/>
+  <path id="pinavia_r" d="M 30,90 Q 30,30 90,30 m -4,-2 l 4,2 l -4,2"/>
+  <path id="itl_l" d="M 10,90 C 10,50 25,50 25,22 Q 25,-25 -22,-25 C -50,-25 -50,-10 -90,-10 m 4,-2 l -4,2 l 4,2"/>
+  <path id="itl_a" d="M 20,90 C 20,45 35,65 35,0 S 20,-45 20,-90 m -2,4 l 2,-4 l 2,4"/>
+  <path id="itl_r" d="M 30,90 Q 30,30 90,30 m -4,-2 l 4,2 l -4,2"/>
+  <path id="braided_l" d="M 10,90 C 10,50 -50,-10 -90,-10 m 4,-2 l -4,2 l 4,2"/>
+  <path id="braided_a" d="M 20,90 C 20,50 -10,40 -10,0 S 20,-50 20,-90 m -2,4 l 2,-4 l 2,4"/>
+  <path id="braided_r" d="M 30,90 Q 30,30 90,30 m -4,-2 l 4,2 l -4,2"/>
+  <g id="flows" class="animate">
+   <g transform="translate(0,-250)">
+    <g>
+     <use xlink:href="#cloverleaf_weave"/>
+     <use xlink:href="#cloverleaf_weave" transform="rotate(90)"/>
+     <use xlink:href="#cloverleaf_weave" transform="rotate(180)"/>
+     <use xlink:href="#cloverleaf_weave" transform="rotate(270)"/>
+     <use class="i_s o_w"   xlink:href="#cloverleaf_l"/>
+     <use class="i_s o_n a" xlink:href="#cloverleaf_a"/>
+     <use class="i_s o_e"   xlink:href="#cloverleaf_r"/>
+     <use class="i_w o_n"   xlink:href="#cloverleaf_l" transform="rotate(90)"/>
+     <use class="i_w o_e a" xlink:href="#cloverleaf_a" transform="rotate(90)"/>
+     <use class="i_w o_s"   xlink:href="#cloverleaf_r" transform="rotate(90)"/>
+     <use class="i_n o_e"   xlink:href="#cloverleaf_l" transform="rotate(180)"/>
+     <use class="i_n o_s a" xlink:href="#cloverleaf_a" transform="rotate(180)"/>
+     <use class="i_n o_w"   xlink:href="#cloverleaf_r" transform="rotate(180)"/>
+     <use class="i_e o_s"   xlink:href="#cloverleaf_l" transform="rotate(270)"/>
+     <use class="i_e o_w a" xlink:href="#cloverleaf_a" transform="rotate(270)"/>
+     <use class="i_e o_n"   xlink:href="#cloverleaf_r" transform="rotate(270)"/>
+    </g>
+    <g transform="translate(200,0)">
+     <use class="i_s o_w"   xlink:href="#stack_l"/>
+     <use class="i_s o_n a" xlink:href="#stack_a"/>
+     <use class="i_s o_e"   xlink:href="#stack_r"/>
+     <use class="i_w o_n"   xlink:href="#stack_l" transform="rotate(90)"/>
+     <use class="i_w o_e a" xlink:href="#stack_a" transform="rotate(90)"/>
+     <use class="i_w o_s"   xlink:href="#stack_r" transform="rotate(90)"/>
+     <use class="i_n o_e"   xlink:href="#stack_l" transform="rotate(180)"/>
+     <use class="i_n o_s a" xlink:href="#stack_a" transform="rotate(180)"/>
+     <use class="i_n o_w"   xlink:href="#stack_r" transform="rotate(180)"/>
+     <use class="i_e o_s"   xlink:href="#stack_l" transform="rotate(270)"/>
+     <use class="i_e o_w a" xlink:href="#stack_a" transform="rotate(270)"/>
+     <use class="i_e o_n"   xlink:href="#stack_r" transform="rotate(270)"/>
+    </g>
+    <g transform="translate(400,0)">
+     <use class="i_s o_w"   xlink:href="#turbine_l"/>
+     <use class="i_s o_n a" xlink:href="#turbine_a"/>
+     <use class="i_s o_e"   xlink:href="#turbine_r"/>
+     <use class="i_w o_n"   xlink:href="#turbine_l" transform="rotate(90)"/>
+     <use class="i_w o_e a" xlink:href="#turbine_a" transform="rotate(90)"/>
+     <use class="i_w o_s"   xlink:href="#turbine_r" transform="rotate(90)"/>
+     <use class="i_n o_e"   xlink:href="#turbine_l" transform="rotate(180)"/>
+     <use class="i_n o_s a" xlink:href="#turbine_a" transform="rotate(180)"/>
+     <use class="i_n o_w"   xlink:href="#turbine_r" transform="rotate(180)"/>
+     <use class="i_e o_s"   xlink:href="#turbine_l" transform="rotate(270)"/>
+     <use class="i_e o_w a" xlink:href="#turbine_a" transform="rotate(270)"/>
+     <use class="i_e o_n"   xlink:href="#turbine_r" transform="rotate(270)"/>
+    </g>
+    <g transform="translate(600,0)">
+     <use class="i_s o_w"   xlink:href="#pinavia_l"/>
+     <use class="i_s o_n a" xlink:href="#pinavia_a"/>
+     <use class="i_s o_e"   xlink:href="#pinavia_r"/>
+     <use class="i_w o_n"   xlink:href="#pinavia_l" transform="rotate(90)"/>
+     <use class="i_w o_e a" xlink:href="#pinavia_a" transform="rotate(90)"/>
+     <use class="i_w o_s"   xlink:href="#pinavia_r" transform="rotate(90)"/>
+     <use class="i_n o_e"   xlink:href="#pinavia_l" transform="rotate(180)"/>
+     <use class="i_n o_s a" xlink:href="#pinavia_a" transform="rotate(180)"/>
+     <use class="i_n o_w"   xlink:href="#pinavia_r" transform="rotate(180)"/>
+     <use class="i_e o_s"   xlink:href="#pinavia_l" transform="rotate(270)"/>
+     <use class="i_e o_w a" xlink:href="#pinavia_a" transform="rotate(270)"/>
+     <use class="i_e o_n"   xlink:href="#pinavia_r" transform="rotate(270)"/>
+    </g>
+    <g transform="translate(800,0)">
+     <use class="i_s o_w"   xlink:href="#itl_l"/>
+     <use class="i_s o_n a" xlink:href="#itl_a"/>
+     <use class="i_s o_e"   xlink:href="#itl_r"/>
+     <use class="i_w o_n"   xlink:href="#itl_l" transform="rotate(90)"/>
+     <use class="i_w o_e a" xlink:href="#itl_a" transform="rotate(90)"/>
+     <use class="i_w o_s"   xlink:href="#itl_r" transform="rotate(90)"/>
+     <use class="i_n o_e"   xlink:href="#itl_l" transform="rotate(180)"/>
+     <use class="i_n o_s a" xlink:href="#itl_a" transform="rotate(180)"/>
+     <use class="i_n o_w"   xlink:href="#itl_r" transform="rotate(180)"/>
+     <use class="i_e o_s"   xlink:href="#itl_l" transform="rotate(270)"/>
+     <use class="i_e o_w a" xlink:href="#itl_a" transform="rotate(270)"/>
+     <use class="i_e o_n"   xlink:href="#itl_r" transform="rotate(270)"/>
+    </g>
+    <g transform="translate(1000,0)">
+     <use class="i_s o_w"   xlink:href="#braided_l"/>
+     <use class="i_s o_n a" xlink:href="#braided_a"/>
+     <use class="i_s o_e"   xlink:href="#braided_r"/>
+     <use class="i_w o_n"   xlink:href="#braided_l" transform="rotate(90)"/>
+     <use class="i_w o_e a" xlink:href="#braided_a" transform="rotate(90)"/>
+     <use class="i_w o_s"   xlink:href="#braided_r" transform="rotate(90)"/>
+     <use class="i_n o_e"   xlink:href="#braided_l" transform="rotate(180)"/>
+     <use class="i_n o_s a" xlink:href="#braided_a" transform="rotate(180)"/>
+     <use class="i_n o_w"   xlink:href="#braided_r" transform="rotate(180)"/>
+     <use class="i_e o_s"   xlink:href="#braided_l" transform="rotate(270)"/>
+     <use class="i_e o_w a" xlink:href="#braided_a" transform="rotate(270)"/>
+     <use class="i_e o_n"   xlink:href="#braided_r" transform="rotate(270)"/>
+    </g>
+   </g>
+   <g transform="scale(1,-1)">
+    <g>
+     <use xlink:href="#cloverleaf_weave"/>
+     <use xlink:href="#cloverleaf_weave" transform="rotate(90)"/>
+     <use xlink:href="#cloverleaf_weave" transform="rotate(180)"/>
+     <use xlink:href="#cloverleaf_weave" transform="rotate(270)"/>
+     <use class="i_n o_w"   xlink:href="#cloverleaf_l"/>
+     <use class="i_n o_s a" xlink:href="#cloverleaf_a"/>
+     <use class="i_n o_e"   xlink:href="#cloverleaf_r"/>
+     <use class="i_w o_s"   xlink:href="#cloverleaf_l" transform="rotate(90)"/>
+     <use class="i_w o_e a" xlink:href="#cloverleaf_a" transform="rotate(90)"/>
+     <use class="i_w o_n"   xlink:href="#cloverleaf_r" transform="rotate(90)"/>
+     <use class="i_s o_e"   xlink:href="#cloverleaf_l" transform="rotate(180)"/>
+     <use class="i_s o_n a" xlink:href="#cloverleaf_a" transform="rotate(180)"/>
+     <use class="i_s o_w"   xlink:href="#cloverleaf_r" transform="rotate(180)"/>
+     <use class="i_e o_n"   xlink:href="#cloverleaf_l" transform="rotate(270)"/>
+     <use class="i_e o_w a" xlink:href="#cloverleaf_a" transform="rotate(270)"/>
+     <use class="i_e o_s"   xlink:href="#cloverleaf_r" transform="rotate(270)"/>
+    </g>
+    <g transform="translate(200,0)">
+     <use class="i_n o_w"   xlink:href="#stack_l"/>
+     <use class="i_n o_s a" xlink:href="#stack_a"/>
+     <use class="i_n o_e"   xlink:href="#stack_r"/>
+     <use class="i_w o_s"   xlink:href="#stack_l" transform="rotate(90)"/>
+     <use class="i_w o_e a" xlink:href="#stack_a" transform="rotate(90)"/>
+     <use class="i_w o_n"   xlink:href="#stack_r" transform="rotate(90)"/>
+     <use class="i_s o_e"   xlink:href="#stack_l" transform="rotate(180)"/>
+     <use class="i_s o_n a" xlink:href="#stack_a" transform="rotate(180)"/>
+     <use class="i_s o_w"   xlink:href="#stack_r" transform="rotate(180)"/>
+     <use class="i_e o_n"   xlink:href="#stack_l" transform="rotate(270)"/>
+     <use class="i_e o_w a" xlink:href="#stack_a" transform="rotate(270)"/>
+     <use class="i_e o_s"   xlink:href="#stack_r" transform="rotate(270)"/>
+    </g>
+    <g transform="translate(400,0)">
+     <use class="i_n o_w"   xlink:href="#turbine_l"/>
+     <use class="i_n o_s a" xlink:href="#turbine_a"/>
+     <use class="i_n o_e"   xlink:href="#turbine_r"/>
+     <use class="i_w o_s"   xlink:href="#turbine_l" transform="rotate(90)"/>
+     <use class="i_w o_e a" xlink:href="#turbine_a" transform="rotate(90)"/>
+     <use class="i_w o_n"   xlink:href="#turbine_r" transform="rotate(90)"/>
+     <use class="i_s o_e"   xlink:href="#turbine_l" transform="rotate(180)"/>
+     <use class="i_s o_n a" xlink:href="#turbine_a" transform="rotate(180)"/>
+     <use class="i_s o_w"   xlink:href="#turbine_r" transform="rotate(180)"/>
+     <use class="i_e o_n"   xlink:href="#turbine_l" transform="rotate(270)"/>
+     <use class="i_e o_w a" xlink:href="#turbine_a" transform="rotate(270)"/>
+     <use class="i_e o_s"   xlink:href="#turbine_r" transform="rotate(270)"/>
+    </g>
+    <g transform="translate(600,0)">
+     <use class="i_n o_w"   xlink:href="#pinavia_l"/>
+     <use class="i_n o_s a" xlink:href="#pinavia_a"/>
+     <use class="i_n o_e"   xlink:href="#pinavia_r"/>
+     <use class="i_w o_s"   xlink:href="#pinavia_l" transform="rotate(90)"/>
+     <use class="i_w o_e a" xlink:href="#pinavia_a" transform="rotate(90)"/>
+     <use class="i_w o_n"   xlink:href="#pinavia_r" transform="rotate(90)"/>
+     <use class="i_s o_e"   xlink:href="#pinavia_l" transform="rotate(180)"/>
+     <use class="i_s o_n a" xlink:href="#pinavia_a" transform="rotate(180)"/>
+     <use class="i_s o_w"   xlink:href="#pinavia_r" transform="rotate(180)"/>
+     <use class="i_e o_n"   xlink:href="#pinavia_l" transform="rotate(270)"/>
+     <use class="i_e o_w a" xlink:href="#pinavia_a" transform="rotate(270)"/>
+     <use class="i_e o_s"   xlink:href="#pinavia_r" transform="rotate(270)"/>
+    </g>
+    <g transform="translate(800,0)">
+     <use class="i_n o_w"   xlink:href="#itl_l"/>
+     <use class="i_n o_s a" xlink:href="#itl_a"/>
+     <use class="i_n o_e"   xlink:href="#itl_r"/>
+     <use class="i_w o_s"   xlink:href="#itl_l" transform="rotate(90)"/>
+     <use class="i_w o_e a" xlink:href="#itl_a" transform="rotate(90)"/>
+     <use class="i_w o_n"   xlink:href="#itl_r" transform="rotate(90)"/>
+     <use class="i_s o_e"   xlink:href="#itl_l" transform="rotate(180)"/>
+     <use class="i_s o_n a" xlink:href="#itl_a" transform="rotate(180)"/>
+     <use class="i_s o_w"   xlink:href="#itl_r" transform="rotate(180)"/>
+     <use class="i_e o_n"   xlink:href="#itl_l" transform="rotate(270)"/>
+     <use class="i_e o_w a" xlink:href="#itl_a" transform="rotate(270)"/>
+     <use class="i_e o_s"   xlink:href="#itl_r" transform="rotate(270)"/>
+    </g>
+    <g transform="translate(1000,0)">
+     <use class="i_n o_w"   xlink:href="#braided_l"/>
+     <use class="i_n o_s a" xlink:href="#braided_a"/>
+     <use class="i_n o_e"   xlink:href="#braided_r"/>
+     <use class="i_w o_s"   xlink:href="#braided_l" transform="rotate(90)"/>
+     <use class="i_w o_e a" xlink:href="#braided_a" transform="rotate(90)"/>
+     <use class="i_w o_n"   xlink:href="#braided_r" transform="rotate(90)"/>
+     <use class="i_s o_e"   xlink:href="#braided_l" transform="rotate(180)"/>
+     <use class="i_s o_n a" xlink:href="#braided_a" transform="rotate(180)"/>
+     <use class="i_s o_w"   xlink:href="#braided_r" transform="rotate(180)"/>
+     <use class="i_e o_n"   xlink:href="#braided_l" transform="rotate(270)"/>
+     <use class="i_e o_w a" xlink:href="#braided_a" transform="rotate(270)"/>
+     <use class="i_e o_s"   xlink:href="#braided_r" transform="rotate(270)"/>
+    </g>
+   </g>
+  </g>
+ </defs>
+ <circle cx="0" cy="0" r="9999" fill="#ffffff"/>
+ <g class="main">
+  <use xlink:href="#flows"/>
+  <!--
+  <use xlink:href="#flows" stroke-opacity="0.5"/>
+  -->
+  <path d="M -90,-390 v -5 h 780 v  5 m 20,0 v -5 h 380 v  5
+          M -90, 140 v  5 h 580 v -5 m 20,0 v  5 h 580 v -5 M 0,31 v 70" stroke="#999999"/>
+  <g transform="translate(0,-125)" fill="#000000">
+   <text x="0"    y="0.6ex"><tspan>1. Cloverleaf</tspan></text>
+   <text x="200"  y="0.6ex"><tspan>2. Stack</tspan></text>
+   <text x="400"  y="-.3ex"><tspan x="400">3.&#8201;Turbine&#8201;/</tspan><tspan x="410" dy="1em">windmill</tspan></text>
+   <text x="600"  y="0.6ex"><tspan>4. Pinavia</tspan></text>
+   <text x="800"  y="-.3ex"><tspan x="800">5. ITL (inside</tspan><tspan x="820" dy="1em">turning left)</tspan></text>
+   <text x="1000" y="0.6ex"><tspan>6. Braided</tspan></text>
+   <g font-size="24">
+    <text x="0"    y="0.7ex"  dy="235" font-style="italic"><tspan>weaving</tspan></text>
+    <text x="500"  y="0.7ex"  dy="245" font-weight="bold" letter-spacing="1ex" ><tspan>LEFT-HAND TRAFFIC</tspan></text>
+    <text x="500"  y="0.7ex" dy="-245" font-weight="bold" letter-spacing="1ex"><tspan>RIGHT-HAND TRAFFIC</tspan></text>
+    <text x="300"  y="0.6ex" dy="-285" ><tspan>Straight-ahead traffic exits on inside lane</tspan></text>
+    <text x="900"  y="0.6ex" dy="-285" ><tspan>...exits on middle lane</tspan></text>
+    <text x="200"  y="0.6ex"  dy="285" ><tspan>Straight-ahead traffic enters on inside lane</tspan></text>
+    <text x="800"  y="0.6ex"  dy="285" ><tspan>...enters on middle lane</tspan></text>
+   </g>
+  </g>
+ </g>
+</svg>
