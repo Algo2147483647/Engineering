@@ -1,22 +1,42 @@
+# Solving Algorithm of Markov Decision Process
+
 [TOC]
 
-## Value-Based Methods
+## Value-Based methods: Estimate the Value function
 
-### Estimate the Value function
+For a Markov decision process, the value-based methods is to find the optimal policy indirectly by estimating the value function $V_\pi(s)$ of the policy $\pi$ of each state or state-action pair.
 
-- Dynamic Programming: 迭代寻找不动点
-$$
-V_{k+1} (s) = \sum_a \mathbb P_\pi(a | s) \sum_{s',r} \mathbb P(s', r | s, a) (r + \gamma V_k (s'))
-$$
-$V_\pi$即是迭代寻找的不动点
+### Dynamic Programming: Iterative search for fixed points
 
-- Monte Carlo Method: 随机采样估计  
-当环境转移概率$\mathbb P(s', r | s, a)$不知道时, 通过随机采样$G_t$以估计$V_\pi(s)$.
 $$
-V_\pi(s) \gets V_\pi(s) + \alpha (G_t - V_\pi(s))
+V(s) \leftarrow \max_{a \in A(s)} \left( R(s, a) + \gamma \sum_{s' \in S} P(s' | s, a) V(s') \right)\\
+V^{\pi}(s) = R(s, \pi(s)) + \gamma \sum_{s' \in S} P(s' | s, \pi(s)) V^{\pi}(s')\\
+\pi'(s) = \arg \max_{a \in A(s)} \left( R(s, a) + \gamma \sum_{s' \in S} P(s' | s, a) V^{\pi}(s') \right)
+$$
+Dynamic programming (DP) is an optimization method that decomposes complex problems into simple sub-problems, suitable for decision-making problems with overlapping sub-problems and optimal sub-structures. Dynamic programming updates the state-value function V(s) through value iteration or policy iteration to ultimately obtain an optimal strategy.
+
+- Value Iteration: The value functions are updated iteratively until they converge to the optimal value function. Its convergence can be guaranteed by the Bellman optimality equation, and the iteration stops when $|V(s)^{\text{new}} - V(s)^{\text{old}}| < \epsilon, \forall s \in S$.
+- Policy Iteration: The optimal strategy is gradually approached by alternating strategy evaluation and strategy improvement.
+
+### Monte Carlo Method: Random sampling estimation
+
+$$
+V_\pi (s) = \mathbb E \left(\sum_{t=0}^T \gamma^t R_t \ |\ S_0 = s, \pi \right)
 $$
 
-- Temporal Difference Learning
+Monte Carlo method is used to estimate statistical distributions through large-scale random sampling, without knowing environmental information such as the transition probability $\mathbb P(s', r | s, a)$. Specifically, we randomly sample a large number of complete paths $\left\{G_{\pi, s}^{(1)}, G_{\pi, s}^{(2)}, \cdots \right\}$ starting from state $s$ and then calculate their expectations to estimate the value function $V_\pi(s)$ of following policy $\pi$.
+$$
+\hat V_\pi(s) \gets \hat V_\pi(s) + \alpha \left(G_{\pi, s}^{(i)} - \hat V_\pi(s)\right)  \tag{sequential update}
+$$
+
+In the specific implementation, the sequential update method can be used. 
+
+- $\hat V_\pi(s)$: estimation of the value function.
+- $G_t$: the cumulative reward sample value after a complete sampling from state $s$ to the termination.
+- $\alpha$: learning rate, controls how much new information updates the current estimate.
+
+### Temporal Difference Learning
+
 $$
 \begin{align*}
 V_\pi(s)  &\gets V_\pi(s) + \alpha (r + \gamma V_\pi(s') - V_\pi(s))  \\
@@ -25,7 +45,12 @@ Q(s, a) &\gets Q(s, a) + \alpha \left(r + \gamma · \max_{a_i' \in A} Q(s', a_i'
 \end{align*}
 $$
 
-### Q-Learning & SARSA
+Temporal Difference Learning updates the value function at each time step based on partial information. TD learning allowing for immediate feedback without needing to estimate the value function at the end of a complete path like Monte Carlo sampling.
+
+- On-policy:
+- Off-policy: 
+
+#### Q-Learning & State-action-reward-state-action
 
 $$
 Q(s_t, a_t) \leftarrow Q(s_t, a_t) + \alpha [r_{t+1} + \gamma \max_{a} Q(s_{t+1}, a) - Q(s_t, a_t)]
@@ -37,16 +62,17 @@ $$
 
 State-Action-Reward-State-Action (SARSA) is an on-policy learner.
 
-### Deep Q-Networks
+#### Deep Q-Networks: Q-Learning + Neural networks
 
-## Policy-Based Methods
+Instead of using a Q-table, DQN employs a neural network to approximate the Q-function.
 
+## Policy-Based methods: Direct search the optimal policy
 
-#### Q: finding the optimal policy
+Policy-Based methods directly learn a policy and optimize the policy itself. Specifically, they estimate the probability distribution of selecting a particular action given a state.
 
-策略梯度上升方法
-- 原理: 通过策略梯度上升更新随机性策略的参数$\theta$. $J(\theta)$是对策略的性能度量函数, 可定义为$J(\theta) = V_{\pi_\theta} (s_{t=0})$.
+### Policy Gradient Ascent Method
 
+原理: 通过策略梯度上升更新随机性策略的参数$\theta$. $J(\theta)$是对策略的性能度量函数, 可定义为$J(\theta) = V_{\pi_\theta} (s_{t=0})$.
 $$
 \begin{align*}
 \mathbb P_\pi (a | s, \theta)  \\
@@ -54,7 +80,7 @@ $$
 \end{align*}
 $$
 
-- Strategy gradient theorem  
+Strategy gradient theorem  
 $$
 \begin{align*}
 \nabla J(\boldsymbol \theta) &= \nabla_\theta V(s)  \\
@@ -65,7 +91,7 @@ $$
 
 ### Policy Gradient
 
-## 综合方法
+## Comprehensive methods
 
 ### Actor-Critic
 
@@ -87,10 +113,10 @@ The Actor-Critic algorithm is a foundational approach that combines the policy-b
 
 - **Variants**: There are many variants of the actor-critic algorithm, including A3C (Asynchronous Advantage Actor-Critic), A2C (Advantage Actor-Critic), and SAC (Soft Actor-Critic), each with its own improvements and optimizations for different scenarios.
 
-#### Deep Deterministic Policy Gradient (DDPG)
+### Deep Deterministic Policy Gradient (DDPG)
 
 DDPG is a model-free, off-policy actor-critic algorithm that specifically addresses environments with continuous action spaces.
 
 <img src="assets/Deep-Deterministic-Policy-Gradient-DDPG-algorithm-structure.png" alt="Deep Deterministic Policy Gradient (DDPG) algorithm structure ..." style="zoom: 60%;" />
 
-#### Asynchronous Advantage Actor-Critic (A3C)
+### Asynchronous Advantage Actor-Critic (A3C)

@@ -224,7 +224,7 @@ The policy network and value network are combined into a single deep convolution
 - Policy Head: One branch of the network processes the features from the shared layers to produce the policy (the action probabilities).
 - Value Head: Another branch processes the same features to produce the value (the game outcome evaluation).
 
-### MCTS
+### Monte Carlo Tree Search
 
 **Selection**: During the tree search process, MCTS starts from the root node and selects a path until it reaches a node that has not been fully expanded or a leaf node. During the selection process, MCTS uses UCT (Upper Confidence Bound for Trees) to balance exploration and exploitation. 通过引入网络提供的策略概率来帮助计算节点选择的优先级, MCTS 在选择动作时偏向于那些网络预测为高概率的动作，从而加速了搜索过程。
 $$
