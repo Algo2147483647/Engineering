@@ -15,10 +15,10 @@ Power struggle is the background of social activities. The essence of power stru
 ### Sources of power
 
 $$
-Power = \text{Legitimate power} + \text{Connection power} + \text{Prestige power}
+Power = \text{Rule power} + \text{Connection power} + \text{Prestige power}
 $$
 
-- **Legitimate power**: Authority that comes from a formal position or role within an organization. Specifically, legitimate power includes the ability to give or withhold rewards (such as promotions, bonuses, or praise) and the ability to punish or threaten punishment.
+- **Rule power**: Authority that comes from a formal position or role within an organization. Rule power can also be human resources directly controlled under physical and physiological rules (such as military threats and mind control). Specifically, legitimate power includes the ability to give or withhold rewards (such as promotions, bonuses, or praise) and the ability to punish or threaten punishment.
 - **Connection power**: A group of interconnected people or organizations that can provide support, advice, and resources. Connection power represents the core human resources that can directly provide key functions.
 - **Prestige power**: Influence based on personal traits, charisma, and the ability to attract others. Prestige power represents potentially available human resources, which are characterized by the huge quantity.
 
