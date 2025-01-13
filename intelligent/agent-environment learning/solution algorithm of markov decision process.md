@@ -9,13 +9,18 @@ For a Markov decision process, the value-based methods is to find the optimal po
 ### Dynamic Programming: Iterative search for fixed points
 
 $$
-V(s) \leftarrow \max_{a \in A(s)} \left( R(s, a) + \gamma \sum_{s' \in S} P(s' | s, a) V(s') \right)\\
-V^{\pi}(s) = R(s, \pi(s)) + \gamma \sum_{s' \in S} P(s' | s, \pi(s)) V^{\pi}(s')\\
-\pi'(s) = \arg \max_{a \in A(s)} \left( R(s, a) + \gamma \sum_{s' \in S} P(s' | s, a) V^{\pi}(s') \right)
+\begin{align*}
+\hat V(s) &\leftarrow \max_{a \in A(s)} \left( R(s, a) + \gamma \sum_{s' \in S} \mathbb P(s' | s, a) \hat V(s') \right)  \tag{value iteration}\\
+V^{\pi}(s) &= R(s, \pi(s)) + \gamma \sum_{s' \in S} \mathbb P(s' | s, \pi(s)) V^{\pi}(s')\\
+\pi'(s) &= \arg \max_{a \in A(s)} \left( R(s, a) + \gamma \sum_{s' \in S} \mathbb P(s' | s, a) V^{\pi}(s') \right)
+\end{align*}
 $$
-Dynamic programming (DP) is an optimization method that decomposes complex problems into simple sub-problems, suitable for decision-making problems with overlapping sub-problems and optimal sub-structures. Dynamic programming updates the state-value function V(s) through value iteration or policy iteration to ultimately obtain an optimal strategy.
 
-- Value Iteration: The value functions are updated iteratively until they converge to the optimal value function. Its convergence can be guaranteed by the Bellman optimality equation, and the iteration stops when $|V(s)^{\text{new}} - V(s)^{\text{old}}| < \epsilon, \forall s \in S$.
+Dynamic programming (DP) is an optimization method that decomposes complex problems into simple sub-problems, suitable for decision-making problems with overlapping sub-problems and optimal sub-structures. Dynamic programming updates the state-value function V(s) through value iterati
+
+on or policy iteration to ultimately obtain an optimal strategy.
+
+- Value Iteration: The value functions are updated iteratively until they converge to the optimal value function. Its convergence can be guaranteed by the Bellman optimality equation. Specifically, value iteration start with an initial guess $\hat V^{(0)}(s)$ and the iteration stops when $|\hat V^{\text{new}}(s) - \hat V^{\text{old}}(s)| < \epsilon, \forall s \in S$.
 - Policy Iteration: The optimal strategy is gradually approached by alternating strategy evaluation and strategy improvement.
 
 ### Monte Carlo Method: Random sampling estimation
