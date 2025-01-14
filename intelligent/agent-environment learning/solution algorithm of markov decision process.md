@@ -11,17 +11,15 @@ For a Markov decision process, the value-based methods is to find the optimal po
 $$
 \begin{align*}
 \hat V(s) &\leftarrow \max_{a \in A(s)} \left( R(s, a) + \gamma \sum_{s' \in S} \mathbb P(s' | s, a) \hat V(s') \right)  \tag{value iteration}\\
-V^{\pi}(s) &= R(s, \pi(s)) + \gamma \sum_{s' \in S} \mathbb P(s' | s, \pi(s)) V^{\pi}(s')\\
-\pi'(s) &= \arg \max_{a \in A(s)} \left( R(s, a) + \gamma \sum_{s' \in S} \mathbb P(s' | s, a) V^{\pi}(s') \right)
+V_{\pi}(s) &= R(s, \pi(s)) + \gamma \sum_{s' \in S} \mathbb P(s' | s, \pi(s)) V_{\pi}(s') \tag{policy evaluation}\\
+\pi'(s) &= \arg \max_{a \in A(s)} \left( R(s, a) + \gamma \sum_{s' \in S} \mathbb P(s' | s, a) V_{\pi}(s') \right)  \tag{policy improvement}
 \end{align*}
 $$
 
-Dynamic programming (DP) is an optimization method that decomposes complex problems into simple sub-problems, suitable for decision-making problems with overlapping sub-problems and optimal sub-structures. Dynamic programming updates the state-value function V(s) through value iterati
+Dynamic programming (DP) is an optimization method that decomposes complex problems into simple sub-problems, suitable for decision-making problems with overlapping sub-problems and optimal sub-structures. Dynamic programming updates the state-value function $V(s)$ through value iteration or policy iteration to ultimately obtain an optimal strategy.
 
-on or policy iteration to ultimately obtain an optimal strategy.
-
-- Value Iteration: The value functions are updated iteratively until they converge to the optimal value function. Its convergence can be guaranteed by the Bellman optimality equation. Specifically, value iteration start with an initial guess $\hat V^{(0)}(s)$ and the iteration stops when $|\hat V^{\text{new}}(s) - \hat V^{\text{old}}(s)| < \epsilon, \forall s \in S$.
-- Policy Iteration: The optimal strategy is gradually approached by alternating strategy evaluation and strategy improvement.
+- **Value Iteration**: The value functions $\hat V(s)$ are updated iteratively until they converge to the optimal value function $V(s)$, and its convergence can be guaranteed by the Bellman equation. Specifically, value iteration start with an initial guess $\hat V^{(0)}(s)$ and the iteration stops when $|\hat V^{\text{new}}(s) - \hat V^{\text{old}}(s)| < \epsilon, \forall s \in S$. The value iteration does not need to explicitly maintain a policy, but finds the optimal policy by directly calculating the optimal value function for each state.
+- **Policy Iteration**: The optimal strategy is gradually approached by alternating policy evaluation and policy improvement. Policy evaluation uses the Bellman equation and DP to iteratively update to approximate the value function $V_\pi(s)$ under the current policy $\pi$. Policy improvement updates the strategy greedily based on $V_\pi(s)$ to find the optimal action as the new strategy in each state.
 
 ### Monte Carlo Method: Random sampling estimation
 
@@ -44,32 +42,27 @@ In the specific implementation, the sequential update method can be used.
 
 $$
 \begin{align*}
-V_\pi(s)  &\gets V_\pi(s) + \alpha (r + \gamma V_\pi(s') - V_\pi(s))  \\
-Q(s, a) &\gets Q(s, a) + \alpha (r + \gamma Q(s', a') - Q(s, a))  \tag{on policy}\\
-Q(s, a) &\gets Q(s, a) + \alpha \left(r + \gamma · \max_{a_i' \in A} Q(s', a_i') - Q(s, a)\right)  \tag{off policy}
+V_\pi(s)  &\gets V_\pi(s) + \alpha (r + \gamma V_\pi(s') - V_\pi(s)) 
 \end{align*}
 $$
 
-Temporal Difference Learning updates the value function at each time step based on partial information. TD learning allowing for immediate feedback without needing to estimate the value function at the end of a complete path like Monte Carlo sampling.
+Temporal Difference Learning updates the value function at each time step based on partial raw experience without requiring a model of the environment. TD learning enables immediate feedback without needing to estimate the value function at the end of a complete path like Monte Carlo sampling.
 
-- On-policy:
-- Off-policy: 
+- On-policy (Behavior Policy $=$ Target Policy): Learn the value function and improve the policy based on the agent's current behavior policy. The policy used to generate experience (behavior policy) is the same as the policy being optimized (target policy).
+- Off-policy (Behavior Policy $\neq$ Target Policy): Learn the value function for the target policy while following a different behavior policy to generate experience. The behavior policy is typically more exploratory, while the target policy can focus on exploitation or be deterministic.
 
-#### Q-Learning & State-action-reward-state-action
-
-$$
-Q(s_t, a_t) \leftarrow Q(s_t, a_t) + \alpha [r_{t+1} + \gamma \max_{a} Q(s_{t+1}, a) - Q(s_t, a_t)]
-$$
+#### Q-learning
 
 $$
-Q(s_t, a_t) \leftarrow Q(s_t, a_t) + \alpha [r_{t+1} + \gamma Q(s_{t+1}, a_{t+1}) - Q(s_t, a_t)]
+\begin{align*}
+Q(s_t, a_t) &\leftarrow Q(s_t, a_t) + \alpha (r_{t} + \gamma \max_{a' \in A} Q(s_{t+1}, a) - Q(s_t, a_t))  \tag{Q-learning}\\
+Q(s_t, a_t) &\leftarrow Q(s_t, a_t) + \alpha (r_{t} + \gamma Q(s_{t+1}, a_{t+1}) - Q(s_t, a_t))  \tag{Sarsa}
+\end{align*}
 $$
 
-State-Action-Reward-State-Action (SARSA) is an on-policy learner.
+Q-learning aims to directly estimate the optimal state-action value function $Q(s, a)$ without the dynamic transition probability of the environment. State-Action-Reward-State-Action (SARSA) is an on-policy algorithm and Q-learning is a off-policy algorithm.
 
-#### Deep Q-Networks: Q-Learning + Neural networks
-
-Instead of using a Q-table, DQN employs a neural network to approximate the Q-function.
+Deep Q-Networks (Q-learning + Neural networks) employs a neural network to approximate the $Q(s, a)$ instead of using a Q-table.
 
 ## Policy-Based methods: Direct search the optimal policy
 

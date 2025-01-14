@@ -81,6 +81,19 @@ $$
 - A **deterministic policy** is one where the action chosen by the agent is a direct function of the current state. For any given state, the policy always selects the same action.
 - A **random policy** selects actions in a probabilistic manner, meaning that the same state can result in different actions over time. The policy assigns a probability distribution over possible actions given a state. The agent may choose actions randomly according to these probabilities.
 
+### Exploration & Exploitation
+
+To maximize the cumulative reward, the agent need balancing the trade-off between exploration and exploitation.
+
+- **Exploration**: Trying new actions to discover potentially better rewards
+- **Exploitation**: Use the currently known optimal strategy to select the optimal action.
+
+#### $\epsilon$ - greedy strategy
+
+Generate a random number $p$ uniformly from $[0, 1]$.
+
+- $p < \epsilon$ Explore: randomly selecting an action $a$ from the action space $\mathcal{A}$.
+- $p \geq \epsilon$ Exploit: $a = \arg\max\limits_{a' \in \mathcal{A}} Q(s, a')$
 
 ## Include
 
