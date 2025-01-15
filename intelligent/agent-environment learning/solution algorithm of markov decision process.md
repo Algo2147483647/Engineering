@@ -70,7 +70,6 @@ Policy-Based methods directly learn a policy and optimize the policy itself. Spe
 
 ### Policy Gradient Ascent Method
 
-原理: 通过策略梯度上升更新随机性策略的参数$\theta$. $J(\theta)$是对策略的性能度量函数, 可定义为$J(\theta) = V_{\pi_\theta} (s_{t=0})$.
 $$
 \begin{align*}
 \mathbb P_\pi (a | s, \theta)  \\
@@ -78,7 +77,12 @@ $$
 \end{align*}
 $$
 
-Strategy gradient theorem  
+Policy Gradient Ascent Method update the parameters $\theta$ of the stochastic policy through policy gradient ascent. 
+
+- $J(\theta)$ is the performance measurement function of the policy, which can be defined as $J(\theta) = V_{\pi_\theta} (s_{t=0})$.
+
+### Policy gradient theorem  
+
 $$
 \begin{align*}
 \nabla J(\boldsymbol \theta) &= \nabla_\theta V(s)  \\
@@ -87,33 +91,34 @@ $$
 \end{align*}
 $$
 
+Strategy gradient theorem describes how to compute the gradient of the expected cumulative reward with respect to the parameters of a stochastic policy. 
+
 ### Policy Gradient
 
 ## Comprehensive methods
 
 ### Actor-Critic
 
-The Actor-Critic algorithm is a foundational approach that combines the policy-based and value-based methods. It involves two main components
+The Actor-Critic algorithm combines the policy-based and value-based methods.
 
-1. **Actor**: This part of the algorithm proposes actions given the current state. The actor is essentially the policy $\pi(a|s)$ of the agent, which can be either deterministic or stochastic. It's responsible for the actual decision-making process.
-
-2. **Critic**: The critic evaluates the actions taken by the actor by computing the value function $V(s)$ or the action-value function $Q(s, a)$. The critic assesses the quality of the actions given the state of the environment.
+- **Actor**: proposes actions given the current state. The actor is essentially the policy $\pi(a|s)$ of the agent, which can be either deterministic or stochastic. It's responsible for the actual decision-making process.
+- **Critic**: The critic evaluates the actions taken by the actor by computing the value function $V(s)$ or the action-value function $Q(s, a)$. The critic assesses the quality of the actions given the state of the environment.
 
 <img src="assets/R.png" alt="R" style="zoom: 80%;" />
 
-- **Policy (Actor) Improvement**: The actor adjusts its policy parameters $\theta$ based on the gradient of expected rewards. It tries to maximize the expected return by considering the feedback from the critic.
+**Policy (Actor) Improvement**: The actor adjusts its policy parameters $\theta$ based on the gradient of expected rewards. It tries to maximize the expected return by considering the feedback from the critic.
 
-- **Value Function (Critic) Estimation**: The critic updates the value function parameters $w$ to more accurately predict the expected return. The difference between the predicted return and the actual return (the temporal difference error, $\delta$) is used to improve the policy.
+**Value Function (Critic) Estimation**: The critic updates the value function parameters $w$ to more accurately predict the expected return. The difference between the predicted return and the actual return (the temporal difference error, $\delta$) is used to improve the policy.
 
-- **Temporal Difference (TD) Error**: This is a key concept in actor-critic algorithms. The TD error $\delta$ is calculated by the critic and represents the difference between the predicted reward from the current state-action pair and the reward received plus the predicted reward from the next state. The TD error is then used to update both the actor and the critic.
+**Temporal Difference (TD) Error**: This is a key concept in actor-critic algorithms. The TD error $\delta$ is calculated by the critic and represents the difference between the predicted reward from the current state-action pair and the reward received plus the predicted reward from the next state. The TD error is then used to update both the actor and the critic.
 
-- **Advantages**: Actor-critic methods aim to combine the advantages of both policy-based and value-based approaches. The critic's value function helps reduce the variance of the policy gradient, leading to more stable and efficient learning than policy-based methods alone. At the same time, because the actor maintains an explicit policy, it can be easier to learn and more effective in high-dimensional or continuous action spaces compared to value-based methods.
+**Advantages**: Actor-critic methods aim to combine the advantages of both policy-based and value-based approaches. The critic's value function helps reduce the variance of the policy gradient, leading to more stable and efficient learning than policy-based methods alone. At the same time, because the actor maintains an explicit policy, it can be easier to learn and more effective in high-dimensional or continuous action spaces compared to value-based methods.
 
-- **Variants**: There are many variants of the actor-critic algorithm, including A3C (Asynchronous Advantage Actor-Critic), A2C (Advantage Actor-Critic), and SAC (Soft Actor-Critic), each with its own improvements and optimizations for different scenarios.
+**Variants**: There are many variants of the actor-critic algorithm, including A3C (Asynchronous Advantage Actor-Critic), A2C (Advantage Actor-Critic), and SAC (Soft Actor-Critic), each with its own improvements and optimizations for different scenarios.
 
-### Deep Deterministic Policy Gradient (DDPG)
+### Deep Deterministic Policy Gradient
 
-DDPG is a model-free, off-policy actor-critic algorithm that specifically addresses environments with continuous action spaces.
+Deep Deterministic Policy Gradient (DDPG) is a model-free, off-policy actor-critic algorithm that specifically addresses environments with continuous action spaces.
 
 <img src="assets/Deep-Deterministic-Policy-Gradient-DDPG-algorithm-structure.png" alt="Deep Deterministic Policy Gradient (DDPG) algorithm structure ..." style="zoom: 60%;" />
 
