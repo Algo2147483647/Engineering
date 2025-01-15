@@ -33,7 +33,7 @@ Adapter allow incompatible interfaces to work together that could not interact d
 
 Decorator adds one or more layers of functionality to a base class without modifying the class itself. Both the decorator and the decorated object adhere to the same interface, ensuring that the client remains unaware of the decorator's presence.
 
-## Management objects
+## Manage objects
 
 ### Pool
 
